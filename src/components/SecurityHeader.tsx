@@ -29,17 +29,6 @@ export const SecurityHeader = () => {
             <p className="text-xs text-muted-foreground">Educational Security Simulator</p>
           </div>
         </div>
-        <nav className="hidden md:flex items-center gap-6">
-          <span className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-            Dashboard
-          </span>
-          <span className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-            Simulations
-          </span>
-          <span className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-            Learn More
-          </span>
-        </nav>
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
           <span>All Systems Secure</span>
