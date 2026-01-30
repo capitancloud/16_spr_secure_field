@@ -91,6 +91,20 @@ export const CSRFProtectionSimulator = () => {
     setValidationResult(null);
   };
 
+  const toggleAttackMode = () => {
+    setAttackMode((prev) => {
+      const next = !prev;
+      setLogs((l) => [
+        ...l.slice(-6),
+        next
+          ? ({ type: "warning" as const, content: "Attack mode ENABLED: client token is now forged" })
+          : ({ type: "success" as const, content: "Attack mode DISABLED: client token resynced" }),
+      ]);
+      return next;
+    });
+    setValidationResult(null);
+  };
+
   return (
     <SecurityCard
       title="CSRF Protection"
@@ -162,10 +176,7 @@ export const CSRFProtectionSimulator = () => {
           <Button
             type="button"
             variant={attackMode ? "destructive" : "outline"}
-            onClick={() => {
-              setAttackMode(!attackMode);
-              setValidationResult(null);
-            }}
+            onClick={toggleAttackMode}
           >
             {attackMode ? "🛑 Stop Attack" : "⚔️ Simulate Attack"}
           </Button>
