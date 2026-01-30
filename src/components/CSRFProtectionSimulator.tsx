@@ -138,6 +138,7 @@ export const CSRFProtectionSimulator = () => {
         {/* Controls */}
         <div className="flex flex-wrap gap-2">
           <Button
+            type="button"
             onClick={validateRequest}
             disabled={isValidating}
             variant={validationResult === "error" ? "destructive" : "default"}
@@ -153,14 +154,18 @@ export const CSRFProtectionSimulator = () => {
             Submit Form
           </Button>
           
-          <Button variant="outline" onClick={rotateToken}>
+          <Button type="button" variant="outline" onClick={rotateToken}>
             <RefreshCw className="mr-2 h-4 w-4" />
             Rotate Token
           </Button>
           
           <Button
+            type="button"
             variant={attackMode ? "destructive" : "outline"}
-            onClick={() => setAttackMode(!attackMode)}
+            onClick={() => {
+              setAttackMode(!attackMode);
+              setValidationResult(null);
+            }}
           >
             {attackMode ? "🛑 Stop Attack" : "⚔️ Simulate Attack"}
           </Button>

@@ -97,15 +97,15 @@ export const RateLimitingSimulator = () => {
         
         <div className="flex items-center gap-4">
           <Button
+            type="button"
             onClick={handleRequest}
-            disabled={blocked}
             variant={blocked ? "destructive" : "default"}
             className="glow-button"
           >
             {blocked ? (
               <>
                 <AlertTriangle className="mr-2 h-4 w-4" />
-                Blocked
+                Blocked ({timeToReset}s)
               </>
             ) : (
               "Send Request"
