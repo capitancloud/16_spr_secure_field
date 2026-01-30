@@ -97,7 +97,13 @@
 
   .glass-card::before {
     content: '';
+    /*
+      IMPORTANT: this is a purely visual overlay.
+      It must NEVER capture pointer events, otherwise buttons/inputs inside the card become unclickable.
+    */
     @apply absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300;
+    pointer-events: none;
+    z-index: 0;
     background: linear-gradient(
       135deg,
       hsl(var(--primary) / 0.1) 0%,
@@ -108,6 +114,12 @@
 
   .glass-card:hover::before {
     @apply opacity-100;
+  }
+
+  /* Ensure all card content sits above visual overlays */
+  .glass-card > * {
+    position: relative;
+    z-index: 1;
   }
 
   /* Glow button effect */
@@ -160,6 +172,9 @@
   .animated-border::after {
     content: '';
     @apply absolute inset-0 rounded-xl opacity-0 transition-opacity duration-500;
+    /* Visual border only — must not block interactions */
+    pointer-events: none;
+    z-index: 0;
     background: linear-gradient(90deg, 
       hsl(var(--primary)), 
       hsl(var(--secondary)), 
@@ -190,6 +205,8 @@
   .scan-line::after {
     content: '';
     @apply absolute left-0 right-0 h-px bg-primary/30;
+    /* Visual scan line only — must not block interactions */
+    pointer-events: none;
     animation: scanLine 3s linear infinite;
   }
 }
