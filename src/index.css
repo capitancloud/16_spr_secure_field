@@ -122,6 +122,20 @@
     z-index: 1;
   }
 
+  /*
+    Defensive UI rule:
+    Interactive elements must always be clickable inside glass cards.
+    This prevents accidental overlays (gradients/borders) from trapping pointer events.
+  */
+  .glass-card button:not(:disabled),
+  .glass-card [role="button"],
+  .glass-card a,
+  .glass-card input,
+  .glass-card textarea {
+    position: relative;
+    z-index: 2;
+  }
+
   /* Glow button effect */
   .glow-button {
     @apply relative transition-all duration-300;
@@ -223,6 +237,10 @@
   .text-glow-success {
     text-shadow: 0 0 10px hsl(var(--success) / 0.5);
   }
+
+  .animate-shake {
+    animation: shake 0.35s ease-in-out;
+  }
 }
 
 @keyframes borderGlow {
@@ -238,4 +256,12 @@
 @keyframes scanLine {
   0% { top: -10%; }
   100% { top: 110%; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
 }

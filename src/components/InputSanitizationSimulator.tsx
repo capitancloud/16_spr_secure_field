@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ShieldAlert, Code, AlertTriangle, CheckCircle } from "lucide-react";
 import { SecurityCard } from "./SecurityCard";
 import { Terminal } from "./Terminal";
@@ -69,12 +69,33 @@ const EXAMPLE_ATTACKS = [
 export const InputSanitizationSimulator = () => {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<{ sanitized: string; threats: string[] } | null>(null);
+  const [shake, setShake] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [logs, setLogs] = useState<Array<{ type: "input" | "output" | "error" | "success" | "warning"; content: string }>>([
     { type: "output", content: "Input sanitization engine ready" },
     { type: "success", content: "XSS, SQL Injection, Command Injection detection enabled" },
   ]);
 
+  useEffect(() => {
+    if (!shake) return;
+    const t = window.setTimeout(() => setShake(false), 400);
+    return () => window.clearTimeout(t);
+  }, [shake]);
+
   const handleSanitize = () => {
+    if (!input.trim()) {
+      // EDUCATIONAL NOTE:
+      // In a real app you'd validate input length and format on both client + server.
+      // Here we keep the button clickable to teach UX feedback instead of "dead" UI.
+      setLogs((prev) => [
+        ...prev.slice(-5),
+        { type: "warning" as const, content: "Nessun input da analizzare. Inserisci testo o scegli un esempio." },
+      ]);
+      setShake(true);
+      textareaRef.current?.focus();
+      return;
+    }
+
     const sanitized = sanitizeInput(input);
     setResult(sanitized);
 
@@ -127,18 +148,21 @@ export const InputSanitizationSimulator = () => {
         {/* Input Area */}
         <div className="space-y-2">
           <Textarea
+            ref={textareaRef}
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
               setResult(null);
             }}
             placeholder="Inserisci input potenzialmente pericoloso..."
-            className="font-mono text-sm min-h-[80px] bg-muted/30 border-border"
+            className={cn(
+              "font-mono text-sm min-h-[80px] bg-muted/30 border-border",
+              shake && "animate-shake"
+            )}
           />
           <Button 
             type="button" 
             onClick={handleSanitize} 
-            disabled={!input.trim()} 
             className="glow-button"
           >
             <Code className="mr-2 h-4 w-4" />
