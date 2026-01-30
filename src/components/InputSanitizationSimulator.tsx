@@ -62,7 +62,7 @@ const sanitizeInput = (input: string): { sanitized: string; threats: string[] } 
 const EXAMPLE_ATTACKS = [
   '<script>alert("XSS")</script>',
   "'; DROP TABLE users; --",
-  '<img src=x onerror="stealCookies()">',
+  '<img src=x onerror="steal()">',
   "../../../etc/passwd",
 ];
 
@@ -111,14 +111,15 @@ export const InputSanitizationSimulator = () => {
         <div className="flex flex-wrap gap-2">
           <span className="text-xs text-muted-foreground self-center">Prova un attacco:</span>
           {EXAMPLE_ATTACKS.map((attack, index) => (
-            <Button
-              key={index}
-              variant="outline"
-              size="sm"
-              onClick={() => loadExample(attack)}
-              className="font-mono text-xs"
-            >
-              {attack.substring(0, 15)}...
+          <Button
+            key={index}
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => loadExample(attack)}
+            className="font-mono text-xs"
+          >
+            {attack.substring(0, 12)}...
             </Button>
           ))}
         </div>
@@ -134,7 +135,12 @@ export const InputSanitizationSimulator = () => {
             placeholder="Inserisci input potenzialmente pericoloso..."
             className="font-mono text-sm min-h-[80px] bg-muted/30 border-border"
           />
-          <Button onClick={handleSanitize} disabled={!input} className="glow-button">
+          <Button 
+            type="button" 
+            onClick={handleSanitize} 
+            disabled={!input.trim()} 
+            className="glow-button"
+          >
             <Code className="mr-2 h-4 w-4" />
             Analizza e Sanitizza
           </Button>
