@@ -1,4 +1,9 @@
-import { Shield } from "lucide-react";
+import { Shield, LogOut } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+interface SecurityHeaderProps {
+  onLogout?: () => void;
+}
 
 /**
  * SecurityHeader - Main application header with branding
@@ -11,7 +16,7 @@ import { Shield } from "lucide-react";
  * - Last security audit date
  * - Privacy policy accessibility
  */
-export const SecurityHeader = () => {
+export const SecurityHeader = ({ onLogout }: SecurityHeaderProps) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -29,9 +34,22 @@ export const SecurityHeader = () => {
             <p className="text-xs text-muted-foreground">Educational Security Simulator</p>
           </div>
         </div>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
-          <span>All Systems Secure</span>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
+            <span>All Systems Secure</span>
+          </div>
+          {onLogout && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onLogout}
+              className="gap-2 text-muted-foreground hover:text-foreground"
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </Button>
+          )}
         </div>
       </div>
     </header>
