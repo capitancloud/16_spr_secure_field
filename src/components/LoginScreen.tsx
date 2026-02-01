@@ -116,13 +116,6 @@ export const LoginScreen = ({ onLogin }: LoginScreenProps) => {
             </Button>
           </form>
 
-          <div className="mt-6 p-4 rounded-lg bg-muted/30 border border-border/50">
-            <p className="text-xs text-muted-foreground text-center">
-              🔐 <strong>Nota Educativa:</strong> Il codice viene verificato 
-              utilizzando una funzione di hash SHA-256. In un'applicazione reale, 
-              l'autenticazione avverrebbe lato server.
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>
