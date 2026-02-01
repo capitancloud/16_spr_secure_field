@@ -4,6 +4,8 @@ import { RateLimitingSimulator } from "@/components/RateLimitingSimulator";
 import { CSRFProtectionSimulator } from "@/components/CSRFProtectionSimulator";
 import { InputSanitizationSimulator } from "@/components/InputSanitizationSimulator";
 import { SecurityHeadersViewer } from "@/components/SecurityHeadersViewer";
+import { LoginScreen } from "@/components/LoginScreen";
+import { useAuth } from "@/hooks/useAuth";
 
 /**
  * SecureShield - Educational Security Simulator
@@ -29,9 +31,16 @@ import { SecurityHeadersViewer } from "@/components/SecurityHeadersViewer";
  */
 
 const Index = () => {
+  const { isAuthenticated, login, logout } = useAuth();
+
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return <LoginScreen onLogin={login} />;
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <SecurityHeader />
+      <SecurityHeader onLogout={logout} />
       
       {/* Main Content */}
       <main className="container mx-auto px-4 pt-24 pb-12">
