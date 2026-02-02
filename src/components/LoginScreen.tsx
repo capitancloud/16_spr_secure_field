@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Shield, Lock, AlertCircle, Eye, EyeOff } from "lucide-react";
+import { Lock, AlertCircle, Eye, EyeOff } from "lucide-react";
+import superProgrammatoreLogo from "@/assets/super-programmatore-logo.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -47,11 +48,12 @@ export const LoginScreen = ({ onLogin }: LoginScreenProps) => {
 
       <Card className="w-full max-w-md glass-card border-primary/20">
         <CardHeader className="text-center space-y-4">
-          <div className="mx-auto relative">
-            <div className="absolute inset-0 animate-pulse-glow rounded-full bg-primary/20 blur-xl" />
-            <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary mx-auto">
-              <Shield className="h-8 w-8" />
-            </div>
+          <div className="mx-auto">
+            <img 
+              src={superProgrammatoreLogo} 
+              alt="Super Programmatore Logo" 
+              className="w-48 h-auto mx-auto"
+            />
           </div>
           <div>
             <CardTitle className="text-2xl font-bold">
